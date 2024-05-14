@@ -7,6 +7,9 @@ folderofdrupal=~/dev.zoroastrian.ru
 emailfrom=do-not-reply@zoroastrian.ru
 emailto=jurawww@yandex.ru
 
+noupgrade="No"
+nouemail="No"
+
 cd $folderofdrupal
 
 $pathtophp/php $pathtocomposer/composer update -W --dry-run &>$folderofdrupal/automatic_updates_sh/file
