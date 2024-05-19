@@ -13,7 +13,7 @@ nouemail="No"
 cd $folderofdrupal
 
 $pathtophp/php $pathtocomposer/composer update -W --dry-run &>$folderofdrupal/automatic_updates_sh/file
-if grep updates  $folderofdrupal/automatic_updates_sh/file; then
+if grep Upgrading  $folderofdrupal/automatic_updates_sh/file; then
 
 #to send email
     echo -e "Content-Type: text/plain\r\nFrom: $emailfrom\r\nSubject: Available updates\r\n\r\n"|cat - ./file| /usr/local/bin/sendmail -f $emailfrom $emailto
