@@ -1,11 +1,13 @@
 #to check the updates, send email and update
 
+#which php
 pathtophp=/usr/local/php/cgi/8.2/bin
+#which composer
 pathtocomposer=~/.local/bin
 folderofdrupal=~/dev.zoroastrian.ru
 
 emailfrom=do-not-reply@zoroastrian.ru
-emailto=jurawww@yandex.ru
+emailto=touser@yandex.ru
 
 #0-send email 1-dont send
 noemail=0
