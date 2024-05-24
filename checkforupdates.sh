@@ -32,11 +32,10 @@ fi
 
 #to update the site
 if [ $noupgrade -eq 0 ]; then
-    cd $folderofdrupal
     $pathtophp/php $folderofdrupal/vendor/bin/drush state:set system.maintenance_mode 1 --input-format=integer
     $pathtophp/php $pathtocomposer/composer update -W
-    $pathtophp/php $folderofdrupal/vendor/bin/drush updb --yes
-    $pathtophp/php $folderofdrupal/vendor/bin/drush cache:rebuild
+    $pathtophp/php $folderofdrupal/vendor/bin/drush updatedb --cache-clear --yes
+#    $pathtophp/php $folderofdrupal/vendor/bin/drush cache:rebuild
     $pathtophp/php $folderofdrupal/vendor/bin/drush state:set system.maintenance_mode 0 --input-format=integer
 fi
 
