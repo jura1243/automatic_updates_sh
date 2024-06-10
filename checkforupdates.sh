@@ -1,9 +1,12 @@
+#!/bin/bash
 #to check the updates, send email and update
 
 #which php
 pathtophp=/usr/local/php/cgi/8.2/bin
 #which composer
 pathtocomposer=~/.local/bin
+#which sendmail
+pathtosendmail=/usr/sbin
 folderofdrupal=~/dev.zoroastrian.ru
 
 emailfrom=do-not-reply@zoroastrian.ru
@@ -21,7 +24,7 @@ if grep  Upgrading  $folderofdrupal/automatic_updates_sh/file; then
 
 #to send email
 if [ $noemail -eq 0 ]; then
-    echo -e "Content-Type: text/plain\r\nFrom: $emailfrom\r\nSubject: Available updates\r\n\r\n"|cat - $folderofdrupal/automatic_updates_sh/file| /usr/local/bin/sendmail -f $emailfrom $emailto
+    echo -e "Content-Type: text/plain\r\nFrom: $emailfrom\r\nSubject: Available updates\r\n\r\n"|cat - $folderofdrupal/automatic_updates_sh/file| $pathtosendmail/sendmail -f $emailfrom $emailto
     retVal=$?
     if [ $retVal -ne 0 ]; then
         echo "email send error"
