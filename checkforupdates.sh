@@ -6,7 +6,8 @@ pathtophp=/usr/local/php/cgi/8.2/bin
 #which composer
 pathtocomposer=~/.local/bin
 #which sendmail
-pathtosendmail=/usr/sbin
+#pathtosendmail=/usr/sbin
+sendmailwithpath=$(which sendmail)
 folderofdrupal=~/dev.zoroastrian.ru
 
 emailfrom=do-not-reply@zoroastrian.ru
@@ -24,7 +25,7 @@ if grep  Upgrading  $folderofdrupal/automatic_updates_sh/file; then
 
 #to send email
 if [ $noemail -eq 0 ]; then
-    echo -e "Content-Type: text/plain\r\nFrom: $emailfrom\r\nSubject: Available updates\r\n\r\n"|cat - $folderofdrupal/automatic_updates_sh/file| $pathtosendmail/sendmail -f $emailfrom $emailto
+    echo -e "Content-Type: text/plain\r\nFrom: $emailfrom\r\nSubject: Available updates\r\n\r\n"|cat - $folderofdrupal/automatic_updates_sh/file| $sendmailwithpath -f $emailfrom $emailto
     retVal=$?
     if [ $retVal -ne 0 ]; then
         echo "email send error"
@@ -38,7 +39,12 @@ if [ $noupgrade -eq 0 ]; then
     $pathtophp/php $folderofdrupal/vendor/bin/drush state:set system.maintenance_mode 1 --input-format=integer
     $pathtophp/php $pathtocomposer/composer update -W
     $pathtophp/php $folderofdrupal/vendor/bin/drush updatedb --cache-clear --yes
-#    $pathtophp/php $folderofdrupal/vendor/bin/drush cache:rebuild
+    retVal=$?
+    if [ $retVal -ne 0 ]; then
+        echo "updb error"
+        echo -e "Content-Type: text/plain\r\nFrom: $emailfrom\r\nSubject: error on updb\r\n\r\n"|echo "error on updb\r\n from checkforupdates.sh"| $sendmailwithpath -f $emailfrom $emailto
+    fi
+    $pathtophp/php $folderofdrupal/vendor/bin/drush cache:rebuild
     $pathtophp/php $folderofdrupal/vendor/bin/drush state:set system.maintenance_mode 0 --input-format=integer
 fi
 
