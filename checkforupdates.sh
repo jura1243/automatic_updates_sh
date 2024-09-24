@@ -8,10 +8,10 @@ pathtocomposer=~/.local/bin
 #which sendmail
 #pathtosendmail=/usr/sbin
 sendmailwithpath=$(which sendmail)
-folderofdrupal=~/dev.zoroastrian.ru
+folderofdrupal=~/mysitefolder
 
-emailfrom=do-not-reply@zoroastrian.ru
-emailto=touser@yandex.ru
+emailfrom=do-not-reply@mysitedomain.ru
+emailto=tome@yandex.ru
 
 #0-send email 1-dont send
 noemail=0
