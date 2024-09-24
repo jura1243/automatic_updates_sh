@@ -3,24 +3,26 @@
 #send email if needed
 #update if needed and send email on error
 
+#prefer programs
+#add path to composer and php in $PATH in your .bashrc
 
+#tune paths
 #which php
 pathtophp=/usr/local/php/cgi/8.2/bin
 #which composer
 pathtocomposer=~/.local/bin
-#which sendmail
-#pathtosendmail=/usr/sbin
 sendmailwithpath=$(which sendmail)
 folderofdrupal=~/mysitefolder
 
+#tune settings
 emailfrom=do-not-reply@mysitedomain.ru
 emailto=tome@yandex.ru
-
 #0-send email 1-dont send
 noemail=0
 #0-upgrade 1-dont upgrade
 noupgrade=0
 
+#begin of the program
 cd $folderofdrupal
 
 $pathtophp/php $pathtocomposer/composer update -W --dry-run &>$folderofdrupal/automatic_updates_sh/file
