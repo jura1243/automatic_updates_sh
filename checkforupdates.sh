@@ -1,6 +1,8 @@
 #!/bin/bash
-#to check the updates, send email and update
-#or to check updates and send email only
+#check the updates
+#send email if needed
+#update if needed and send email on error
+
 
 #which php
 pathtophp=/usr/local/php/cgi/8.2/bin
