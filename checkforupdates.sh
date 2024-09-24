@@ -4,7 +4,8 @@
 #update if needed and send email on error
 
 #prefer programs
-#add path to composer and php in $PATH in your .bashrc
+#add path to php and composer and drush in $PATH in your .bashrc
+#for example export PATH=/usr/local/php/cgi/8.3/bin:$HOME/.local/bin:$HOME/mysitefolder/vendor/bin:$PATH
 
 #tune paths
 #which php
