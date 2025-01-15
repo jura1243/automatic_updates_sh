@@ -1,23 +1,18 @@
-#!/bin/bash
-#check the updates
-#send email if needed
-#update if needed and send email on error
+############
+###########3#!/bin/bash
+#to check the updates, send email and update
 
-#prefer programs
-#add path to php and composer and drush in $PATH in your .bashrc
-#for example export PATH=/usr/local/php/cgi/8.3/bin:$HOME/.local/bin:$HOME/mysitefolder/vendor/bin:$PATH
 
-#tune paths
-#which php
+#exit
+
 pathtophp=/usr/local/php/cgi/8.3/bin
-#which composer
-pathtocomposer=~/.local/bin
+pathtocomposer=/home/j/username/.local/bin
+folderofdrupal=/home/j/username/dirofcomposerjson
 sendmailwithpath=$(which sendmail)
-folderofdrupal=~/mysitefolder
 
-#tune settings
-emailfrom=do-not-reply@mysitedomain.ru
-emailto=tome@yandex.ru
+emailfrom=do-not-reply@zoroastrian.ru
+emailto=jurawww@yandex.ru
+
 #0-send email 1-dont send
 noemail=0
 #0-upgrade 1-dont upgrade
@@ -28,11 +23,11 @@ email=1
 #1-upgrade 0-dont upgrade
 upgrade=1
 
-
-#begin of the program
 cd $folderofdrupal
+# $pathtophp/php vendor/bin/drush.php cron
+#exit
 
-$pathtocomposer/composer update -W --dry-run &>$folderofdrupal/automatic_updates_sh/file
+$pathtophp/php $pathtocomposer/composer update -W --dry-run &>$folderofdrupal/automatic_updates_sh/file
 if grep  Upgrading  $folderofdrupal/automatic_updates_sh/file; then
 
 #to send email
@@ -48,18 +43,23 @@ fi
 
 #to update the site
 if [ $upgrade -eq 1 ]; then
-    $folderofdrupal/vendor/bin/drush state:set system.maintenance_mode 1 --input-format=integer
-    $pathtocomposer/composer update -W
-    $folderofdrupal/vendor/bin/drush updatedb --cache-clear --yes
+    $pathtophp/php $folderofdrupal/vendor/bin/drush.php state:set system.maintenance_mode 1 --input-format=integer
+    $pathtophp/php $pathtocomposer/composer update -W
+    $pathtophp/php $folderofdrupal/vendor/bin/drush.php updatedb --cache-clear --yes
+
     retVal=$?
     if [ $retVal -ne 0 ]; then
         echo "updb error"
         echo -e "Content-Type: text/plain\r\nFrom: $emailfrom\r\nSubject: error on updb\r\n\r\n"|echo "error on updb\r\n from checkforupdates.sh"| $sendmailwithpath -f $emailfrom $emailto
+#    else
+#        echo "email sent"
     fi
-    $folderofdrupal/vendor/bin/drush cache:rebuild
-    $folderofdrupal/vendor/bin/drush state:set system.maintenance_mode 0 --input-format=integer
+
+    $pathtophp/php $folderofdrupal/vendor/bin/drush.php cache:rebuild
+    $pathtophp/php $folderofdrupal/vendor/bin/drush.php state:set system.maintenance_mode 0 --input-format=integer
 fi
 
 else
     echo no updates
 fi
+$pathtophp/php $folderofdrupal/vendor/bin/drush.php cron
